@@ -5,4 +5,4 @@ Introduction to R language and data importing
 
 This project contains R code with an accompanying presentation. The presentation is contained in the "docs" folder. The remaining folders contain standalone code for students to use on their own.
 
-To view the presentation, visit: https://psych-259-data-science-2022.github.io/259-langbasics-importing/
+To view the presentation, visit TBD

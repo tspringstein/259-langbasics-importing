@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>R Language Basics and Data Importing</title>
+    <title>R Data Importing</title>
     <meta charset="utf-8" />
     <meta name="author" content="John Franchak" />
-    <script src="libs/header-attrs-2.11.3/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.25/header-attrs.js"></script>
     <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view-0.2.6/tile-view.js"></script>
     <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
@@ -18,9 +18,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# R Language Basics and Data Importing
+.title[
+# R Data Importing
+]
+.subtitle[
 ## PSYC 259: Principles of Data Science
+]
+.author[
 ### John Franchak
+]
 
 ---
 
@@ -30,745 +36,51 @@ class: center, middle, inverse, title-slide
 
 
 
+# Data importing
 
+- read.csv vs. read_csv
 
-# R language basics
-
-- Calculation and assignment 
-
-- Calling functions 
-
-- Importing data in tibbles 
+- Importing multiple files
  
-- Extending the R language with packages 
+- Useful readr capabilities
+
+- Other data import packages
 
 .content-box-blue[
-&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; Follow along from the [Github repo](https://github.com/psych-259-data-science-2022/259-langbasics-importing)
-]
-
-.footnote[.small[.bold[Last updated: 2022-01-11]]]
----
-
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-*1 + 1
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
+&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; Follow along from the [Github repo](https://github.com/2025-PSYC-259/259-langbasics-importing)
 ]
 
 ---
-count: false
- 
+# read_csv versus read.csv 
 
-.panel1-calc_vs_assign-auto[
+.pull-left[
+- read.csv is base R, read_csv is tidyverse
 
-```r
-# R can run simple calculations
-1 + 1
-*4^2
-```
-]
- 
-.panel2-calc_vs_assign-auto[
+- read_csv is faster
 
-```
-[1] 2
-```
+- read_csv makes fewer assumptions about your data
 
-```
-[1] 16
-```
+- read_csv can combine multiple data files into one
 ]
 
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-*two &lt;- 1 + 1
-```
+.pull-right[
+The following examples use .csv (comma separated value) files in the data_raw directory
+![an image](dir.png)
 ]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-]
-
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-two &lt;- 1 + 1
-*two
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-
-```
-[1] 2
-```
-]
-
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-two &lt;- 1 + 1
-two
-
-# Once assigned, variables can be modified by re-assigning a new value to them
-
-*two &lt;- 1 + 3
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-
-```
-[1] 2
-```
-]
-
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-two &lt;- 1 + 1
-two
-
-# Once assigned, variables can be modified by re-assigning a new value to them
-
-two &lt;- 1 + 3
-*two
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-
-```
-[1] 2
-```
-
-```
-[1] 4
-```
-]
-
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-two &lt;- 1 + 1
-two
-
-# Once assigned, variables can be modified by re-assigning a new value to them
-
-two &lt;- 1 + 3
-two
-
-# Variables can be removed from the workspace with rm
-# After removing two, calling it again would lead to an error
-*rm(two)
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-
-```
-[1] 2
-```
-
-```
-[1] 4
-```
-]
-
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-two &lt;- 1 + 1
-two
-
-# Once assigned, variables can be modified by re-assigning a new value to them
-
-two &lt;- 1 + 3
-two
-
-# Variables can be removed from the workspace with rm
-# After removing two, calling it again would lead to an error
-rm(two)
-
-# Variables can be reused in expressions to calculate new variables/outputs
-*var1 &lt;- 5
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-
-```
-[1] 2
-```
-
-```
-[1] 4
-```
-]
-
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-two &lt;- 1 + 1
-two
-
-# Once assigned, variables can be modified by re-assigning a new value to them
-
-two &lt;- 1 + 3
-two
-
-# Variables can be removed from the workspace with rm
-# After removing two, calling it again would lead to an error
-rm(two)
-
-# Variables can be reused in expressions to calculate new variables/outputs
-var1 &lt;- 5
-*var2 &lt;- 10
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-
-```
-[1] 2
-```
-
-```
-[1] 4
-```
-]
-
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-two &lt;- 1 + 1
-two
-
-# Once assigned, variables can be modified by re-assigning a new value to them
-
-two &lt;- 1 + 3
-two
-
-# Variables can be removed from the workspace with rm
-# After removing two, calling it again would lead to an error
-rm(two)
-
-# Variables can be reused in expressions to calculate new variables/outputs
-var1 &lt;- 5
-var2 &lt;- 10
-*var3 &lt;- var1 + var2
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-
-```
-[1] 2
-```
-
-```
-[1] 4
-```
-]
-
----
-count: false
- 
-
-.panel1-calc_vs_assign-auto[
-
-```r
-# R can run simple calculations
-1 + 1
-4^2
-
-# Calculations aren't useful unless we put the results somewhere
-# The assignment operator stores the result into a variable
-
-two &lt;- 1 + 1
-two
-
-# Once assigned, variables can be modified by re-assigning a new value to them
-
-two &lt;- 1 + 3
-two
-
-# Variables can be removed from the workspace with rm
-# After removing two, calling it again would lead to an error
-rm(two)
-
-# Variables can be reused in expressions to calculate new variables/outputs
-var1 &lt;- 5
-var2 &lt;- 10
-var3 &lt;- var1 + var2
-
-# When assigning variables, nothing prints to the console
-# Let's use the function print
-*print(var3)
-```
-]
- 
-.panel2-calc_vs_assign-auto[
-
-```
-[1] 2
-```
-
-```
-[1] 16
-```
-
-```
-[1] 2
-```
-
-```
-[1] 4
-```
-
-```
-[1] 15
-```
-]
-
-&lt;style&gt;
-.panel1-calc_vs_assign-auto {
-  color: black;
-  width: 78.4%;
-  hight: 32%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-.panel2-calc_vs_assign-auto {
-  color: black;
-  width: 19.6%;
-  hight: 32%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-.panel3-calc_vs_assign-auto {
-  color: black;
-  width: NA%;
-  hight: 33%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-&lt;/style&gt;
-
-
-
-
----
 
 count: false
  
 
 .panel1-functions-auto[
 
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-*abs(-1)
-```
-]
- 
-.panel2-functions-auto[
-
-```
-[1] 1
-```
-]
-
----
-count: false
- 
-
-.panel1-functions-auto[
-
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-*min(var1, var2)
-```
-]
- 
-.panel2-functions-auto[
-
-```
-[1] 1
-```
-
-```
-[1] 5
-```
-]
-
----
-count: false
- 
-
-.panel1-functions-auto[
-
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-*sum(var1, var2, var3)
-```
-]
- 
-.panel2-functions-auto[
-
-```
-[1] 1
-```
-
-```
-[1] 5
-```
-
-```
-[1] 30
-```
-]
-
----
-count: false
- 
-
-.panel1-functions-auto[
-
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-sum(var1, var2, var3)
-
-# c is a function that combines values together
-*my_vars &lt;- c(var1, var2, var3)
-```
-]
- 
-.panel2-functions-auto[
-
-```
-[1] 1
-```
-
-```
-[1] 5
-```
-
-```
-[1] 30
-```
-]
-
----
-count: false
- 
-
-.panel1-functions-auto[
-
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-sum(var1, var2, var3)
-
-# c is a function that combines values together
-my_vars &lt;- c(var1, var2, var3)
-*my_vars
-```
-]
- 
-.panel2-functions-auto[
-
-```
-[1] 1
-```
-
-```
-[1] 5
-```
-
-```
-[1] 30
-```
-
-```
-[1]  5 10 15
-```
-]
-
----
-count: false
- 
-
-.panel1-functions-auto[
-
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-sum(var1, var2, var3)
-
-# c is a function that combines values together
-my_vars &lt;- c(var1, var2, var3)
-my_vars
-
-# RStudio has built-in help for every function
-*?c
-```
-]
- 
-.panel2-functions-auto[
-
-```
-[1] 1
-```
-
-```
-[1] 5
-```
-
-```
-[1] 30
-```
-
-```
-[1]  5 10 15
-```
-]
-
----
-count: false
- 
-
-.panel1-functions-auto[
-
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-sum(var1, var2, var3)
-
-# c is a function that combines values together
-my_vars &lt;- c(var1, var2, var3)
-my_vars
-
-# RStudio has built-in help for every function
-?c
-
-# Functions can also be used to import data
+``` r
+# read.csv is part of base R, the default fx set
 *ds &lt;- read.csv('data_raw/vocab16.csv')
 ```
 ]
  
 .panel2-functions-auto[
 
-```
-[1] 1
-```
-
-```
-[1] 5
-```
-
-```
-[1] 30
-```
-
-```
-[1]  5 10 15
-```
 ]
 
 ---
@@ -777,23 +89,8 @@ count: false
 
 .panel1-functions-auto[
 
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-sum(var1, var2, var3)
-
-# c is a function that combines values together
-my_vars &lt;- c(var1, var2, var3)
-my_vars
-
-# RStudio has built-in help for every function
-?c
-
-# Functions can also be used to import data
+``` r
+# read.csv is part of base R, the default fx set
 ds &lt;- read.csv('data_raw/vocab16.csv')
 *print(ds)
 ```
@@ -802,22 +99,6 @@ ds &lt;- read.csv('data_raw/vocab16.csv')
 .panel2-functions-auto[
 
 ```
-[1] 1
-```
-
-```
-[1] 5
-```
-
-```
-[1] 30
-```
-
-```
-[1]  5 10 15
-```
-
-```
   age   word
 1  16  shoes
 2  16  berry
@@ -834,30 +115,13 @@ count: false
 
 .panel1-functions-auto[
 
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-sum(var1, var2, var3)
-
-# c is a function that combines values together
-my_vars &lt;- c(var1, var2, var3)
-my_vars
-
-# RStudio has built-in help for every function
-?c
-
-# Functions can also be used to import data
+``` r
+# read.csv is part of base R, the default fx set
 ds &lt;- read.csv('data_raw/vocab16.csv')
 print(ds)
 
-# read.csv is part of base R, the default fx set
-# When we want to use functions to expand R, we
-# need to use library fx to load packages
-
+# Let's load the readr package to use
+# read_csv
 *library(readr)  #for read_csv
 ```
 ]
@@ -865,22 +129,6 @@ print(ds)
 .panel2-functions-auto[
 
 ```
-[1] 1
-```
-
-```
-[1] 5
-```
-
-```
-[1] 30
-```
-
-```
-[1]  5 10 15
-```
-
-```
   age   word
 1  16  shoes
 2  16  berry
@@ -897,30 +145,13 @@ count: false
 
 .panel1-functions-auto[
 
-```r
-# Print and rm are functions that we use in R
-# We call functions by writing their name followed
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-sum(var1, var2, var3)
-
-# c is a function that combines values together
-my_vars &lt;- c(var1, var2, var3)
-my_vars
-
-# RStudio has built-in help for every function
-?c
-
-# Functions can also be used to import data
+``` r
+# read.csv is part of base R, the default fx set
 ds &lt;- read.csv('data_raw/vocab16.csv')
 print(ds)
 
-# read.csv is part of base R, the default fx set
-# When we want to use functions to expand R, we
-# need to use library fx to load packages
-
+# Let's load the readr package to use
+# read_csv
 library(readr)  #for read_csv
 *ds &lt;- read_csv('data_raw/vocab16.csv')
 ```
@@ -929,20 +160,36 @@ library(readr)  #for read_csv
 .panel2-functions-auto[
 
 ```
-[1] 1
+  age   word
+1  16  shoes
+2  16  berry
+3  16     hi
+4  16 diaper
+5  16  teeth
+6  16   uhoh
 ```
+]
 
-```
-[1] 5
-```
+---
+count: false
+ 
 
-```
-[1] 30
-```
+.panel1-functions-auto[
 
+``` r
+# read.csv is part of base R, the default fx set
+ds &lt;- read.csv('data_raw/vocab16.csv')
+print(ds)
+
+# Let's load the readr package to use
+# read_csv
+library(readr)  #for read_csv
+ds &lt;- read_csv('data_raw/vocab16.csv')
+*print(ds)
 ```
-[1]  5 10 15
-```
+]
+ 
+.panel2-functions-auto[
 
 ```
   age   word
@@ -952,6 +199,18 @@ library(readr)  #for read_csv
 4  16 diaper
 5  16  teeth
 6  16   uhoh
+```
+
+```
+# A tibble: 6 × 2
+    age word  
+  &lt;dbl&gt; &lt;chr&gt; 
+1    16 shoes 
+2    16 berry 
+3    16 hi    
+4    16 diaper
+5    16 teeth 
+6    16 uhoh  
 ```
 ]
 
@@ -987,30 +246,12 @@ library(readr)  #for read_csv
 
 ---
 
-# read_csv versus read.csv 
-
-.pull-left[
-- read.csv is base R, read_csv is tidyverse
-
-- read_csv is faster
-
-- read_csv makes fewer assumptions about your data
-
-- read_csv can combine multiple data files into one
-]
-
-.pull-right[
-The following examples use .csv (comma separated value) files in the data_raw directory
-![an image](dir.png)
-]
----
-
 count: false
  
 
 .panel1-import_sequential-auto[
 
-```r
+``` r
 # We can use read_csv to read individual files
 *ds12 &lt;- read_csv('data_raw/vocab12.csv')
 ```
@@ -1026,7 +267,7 @@ count: false
 
 .panel1-import_sequential-auto[
 
-```r
+``` r
 # We can use read_csv to read individual files
 ds12 &lt;- read_csv('data_raw/vocab12.csv')
 *print(ds12)
@@ -1051,7 +292,7 @@ count: false
 
 .panel1-import_sequential-auto[
 
-```r
+``` r
 # We can use read_csv to read individual files
 ds12 &lt;- read_csv('data_raw/vocab12.csv')
 print(ds12)
@@ -1078,7 +319,7 @@ count: false
 
 .panel1-import_sequential-auto[
 
-```r
+``` r
 # We can use read_csv to read individual files
 ds12 &lt;- read_csv('data_raw/vocab12.csv')
 print(ds12)
@@ -1113,7 +354,7 @@ count: false
 
 .panel1-import_sequential-auto[
 
-```r
+``` r
 # We can use read_csv to read individual files
 ds12 &lt;- read_csv('data_raw/vocab12.csv')
 print(ds12)
@@ -1150,7 +391,7 @@ count: false
 
 .panel1-import_sequential-auto[
 
-```r
+``` r
 # We can use read_csv to read individual files
 ds12 &lt;- read_csv('data_raw/vocab12.csv')
 print(ds12)
@@ -1195,7 +436,7 @@ count: false
 
 .panel1-import_sequential-auto[
 
-```r
+``` r
 # We can use read_csv to read individual files
 ds12 &lt;- read_csv('data_raw/vocab12.csv')
 print(ds12)
@@ -1243,7 +484,7 @@ count: false
 
 .panel1-import_sequential-auto[
 
-```r
+``` r
 # We can use read_csv to read individual files
 ds12 &lt;- read_csv('data_raw/vocab12.csv')
 print(ds12)
@@ -1333,7 +574,7 @@ ds_all &lt;- bind_rows(ds12, ds12.5, ds13.5)
 
 .scroll-box-16[
 
-```r
+``` r
 #function for listing files a directory
 list.files('data_raw', full.names = TRUE) 
 ```
@@ -1360,7 +601,7 @@ count: false
 
 .panel1-import_multiple-auto[
 
-```r
+``` r
 # read_csv can read a list of files!
 
 # Make a variable containing the list of data files
@@ -1378,7 +619,7 @@ count: false
 
 .panel1-import_multiple-auto[
 
-```r
+``` r
 # read_csv can read a list of files!
 
 # Make a variable containing the list of data files
@@ -1399,7 +640,7 @@ count: false
 
 .panel1-import_multiple-auto[
 
-```r
+``` r
 # read_csv can read a list of files!
 
 # Make a variable containing the list of data files
@@ -1427,7 +668,7 @@ ds_all &lt;- read_csv(full_file_names)
  8  14   baby        
  9  15.5 cheese      
 10  15.5 turkey      
-# … with 430 more rows
+# ℹ 430 more rows
 ```
 ]
 
@@ -1498,7 +739,7 @@ count: false
 
 .panel1-tibble-auto[
 
-```r
+``` r
 # Find the minimum and maximum ages
 *min(ds_all$age)
 ```
@@ -1517,7 +758,7 @@ count: false
 
 .panel1-tibble-auto[
 
-```r
+``` r
 # Find the minimum and maximum ages
 min(ds_all$age)
 *max(ds_all$age)
@@ -1541,7 +782,7 @@ count: false
 
 .panel1-tibble-auto[
 
-```r
+``` r
 # Find the minimum and maximum ages
 min(ds_all$age)
 max(ds_all$age)
@@ -1568,7 +809,7 @@ count: false
 
 .panel1-tibble-auto[
 
-```r
+``` r
 # Find the minimum and maximum ages
 min(ds_all$age)
 max(ds_all$age)
@@ -1598,7 +839,7 @@ count: false
 
 .panel1-tibble-auto[
 
-```r
+``` r
 # Find the minimum and maximum ages
 min(ds_all$age)
 max(ds_all$age)
@@ -1638,7 +879,7 @@ ds_all$age_round &lt;- round(ds_all$age)
  8  14   baby         Jonah           14
  9  15.5 cheese       Jonah           16
 10  15.5 turkey       Jonah           16
-# … with 430 more rows
+# ℹ 430 more rows
 ```
 ]
 
@@ -1648,7 +889,7 @@ count: false
 
 .panel1-tibble-auto[
 
-```r
+``` r
 # Find the minimum and maximum ages
 min(ds_all$age)
 max(ds_all$age)
@@ -1691,7 +932,7 @@ print(ds_all)
  8  14   baby         Jonah           14
  9  15.5 cheese       Jonah           16
 10  15.5 turkey       Jonah           16
-# … with 430 more rows
+# ℹ 430 more rows
 ```
 ]
 
@@ -1747,7 +988,7 @@ count: false
 
 .panel1-read_options-rotate[
 
-```r
+``` r
 fname &lt;- "data_cleaned/vocab_combined.csv"
 colname &lt;- c("AGE", "WORD", "NAME", "MONTH")
 coltypes &lt;- "cccc"
@@ -1772,7 +1013,7 @@ print(ds)
  8  14   baby         Jonah           14
  9  15.5 cheese       Jonah           16
 10  15.5 turkey       Jonah           16
-# … with 430 more rows
+# ℹ 430 more rows
 ```
 ]
 
@@ -1782,7 +1023,7 @@ count: false
 
 .panel1-read_options-rotate[
 
-```r
+``` r
 fname &lt;- "data_cleaned/vocab_combined.csv"
 colname &lt;- c("AGE", "WORD", "NAME", "MONTH")
 coltypes &lt;- "cccc"
@@ -1807,7 +1048,7 @@ print(ds)
  8 14.5  dog (animal) Jonah    14       
  9 14    baby         Jonah    14       
 10 15.5  cheese       Jonah    16       
-# … with 431 more rows
+# ℹ 431 more rows
 ```
 ]
 
@@ -1817,7 +1058,7 @@ count: false
 
 .panel1-read_options-rotate[
 
-```r
+``` r
 fname &lt;- "data_cleaned/vocab_combined.csv"
 colname &lt;- c("AGE", "WORD", "NAME", "MONTH")
 coltypes &lt;- "cccc"
@@ -1842,7 +1083,7 @@ print(ds)
  8 14.5  dog (animal) Jonah    14       
  9 14    baby         Jonah    14       
 10 15.5  cheese       Jonah    16       
-# … with 431 more rows
+# ℹ 431 more rows
 ```
 ]
 
@@ -1852,7 +1093,7 @@ count: false
 
 .panel1-read_options-rotate[
 
-```r
+``` r
 fname &lt;- "data_cleaned/vocab_combined.csv"
 colname &lt;- c("AGE", "WORD", "NAME", "MONTH")
 coltypes &lt;- "cccc"
@@ -1877,7 +1118,7 @@ print(ds)
  8  14   baby         Jonah    14
  9  15.5 cheese       Jonah    16
 10  15.5 turkey       Jonah    16
-# … with 430 more rows
+# ℹ 430 more rows
 ```
 ]
 
@@ -1887,7 +1128,7 @@ count: false
 
 .panel1-read_options-rotate[
 
-```r
+``` r
 fname &lt;- "data_cleaned/vocab_combined.csv"
 colname &lt;- c("AGE", "WORD", "NAME", "MONTH")
 coltypes &lt;- "cccc"
@@ -1912,7 +1153,7 @@ print(ds)
  8 14    baby         Jonah 14   
  9 15.5  cheese       Jonah 16   
 10 15.5  turkey       Jonah 16   
-# … with 430 more rows
+# ℹ 430 more rows
 ```
 ]
 
@@ -2185,6 +1426,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

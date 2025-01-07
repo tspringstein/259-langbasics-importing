@@ -1,5 +1,5 @@
 ---
-title: "R Language Basics and Data Importing"
+title: "R Data Importing"
 subtitle: "PSYC 259: Principles of Data Science"
 author: "John Franchak"
 output:
@@ -45,89 +45,21 @@ library(tidyverse)
 library(icons) #https://fontawesome.com/v5.15/icons?d=gallery&p=2&m=free
 ```
 
+# Data importing
 
+- read.csv vs. read_csv
 
-# R language basics
-
-- Calculation and assignment 
-
-- Calling functions 
-
-- Importing data in tibbles 
+- Importing multiple files
  
-- Extending the R language with packages 
+- Useful readr capabilities
+
+- Other data import packages
 
 .content-box-blue[
-`r icons::fontawesome("github")` Follow along from the [Github repo](https://github.com/psych-259-data-science-2022/259-langbasics-importing)
+`r icons::fontawesome("github")` Follow along from the [Github repo](https://github.com/2025-PSYC-259/259-langbasics-importing)
 ]
 
-.footnote[.small[.bold[Last updated: `r Sys.Date()`]]]
 ---
-
-`r chunk_reveal("calc_vs_assign", break_type = "auto", widths = c(4, 1))`
-
-```{r calc_vs_assign, include = FALSE}
-# R can run simple calculations
-1 + 1 
-4^2
-
-# Calculations aren't useful unless we put the results somewhere 
-# The assignment operator stores the result into a variable
-
-two <- 1 + 1
-two
-
-# Once assigned, variables can be modified by re-assigning a new value to them
-
-two <- 1 + 3
-two
-
-# Variables can be removed from the workspace with rm
-# After removing two, calling it again would lead to an error 
-rm(two)
-
-# Variables can be reused in expressions to calculate new variables/outputs
-var1 <- 5
-var2 <- 10
-var3 <- var1 + var2
-
-# When assigning variables, nothing prints to the console 
-# Let's use the function print
-print(var3)
-```
----
-
-`r chunk_reveal("functions", break_type = "auto", widths = c(4, 1))`
-
-```{r functions, include = FALSE}
-# Print and rm are functions that we use in R 
-# We call functions by writing their name followed   
-# by a list of arguments in parentheses
-
-abs(-1)
-min(var1, var2)
-sum(var1, var2, var3)
-
-# c is a function that combines values together
-my_vars <- c(var1, var2, var3)
-my_vars
-
-# RStudio has built-in help for every function
-?c
-
-# Functions can also be used to import data
-ds <- read.csv('data_raw/vocab16.csv')
-print(ds)
-
-# read.csv is part of base R, the default fx set
-# When we want to use functions to expand R, we
-# need to use library fx to load packages
-
-library(readr) #for read_csv
-ds <- read_csv('data_raw/vocab16.csv')
-```
----
-
 # read_csv versus read.csv 
 
 .pull-left[
@@ -144,6 +76,20 @@ ds <- read_csv('data_raw/vocab16.csv')
 The following examples use .csv (comma separated value) files in the data_raw directory
 ![an image](dir.png)
 ]
+
+`r chunk_reveal("functions", break_type = "auto", widths = c(4, 1))`
+
+```{r functions, include = FALSE}
+# read.csv is part of base R, the default fx set
+ds <- read.csv('data_raw/vocab16.csv')
+print(ds)
+
+# Let's load the readr package to use
+# read_csv
+library(readr) #for read_csv
+ds <- read_csv('data_raw/vocab16.csv')
+print(ds)
+```
 ---
 
 `r chunk_reveal("import_sequential", break_type = "auto", widths = c(2, 1))`
