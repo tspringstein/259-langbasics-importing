@@ -58,7 +58,7 @@ library(icons) #https://fontawesome.com/v5.15/icons?d=gallery&p=2&m=free
 .content-box-blue[
 `r icons::fontawesome("github")` Follow along from the [Github repo](https://github.com/2025-PSYC-259/259-langbasics-importing)
 ]
-
+.footnote[.small[.bold[Last updated: `r Sys.Date()`]]]
 ---
 # read_csv versus read.csv 
 
@@ -84,8 +84,7 @@ The following examples use .csv (comma separated value) files in the data_raw di
 ds <- read.csv('data_raw/vocab16.csv')
 print(ds)
 
-# Let's load the readr package to use
-# read_csv
+# Let's load the readr package to use read_csv
 library(readr) #for read_csv
 ds <- read_csv('data_raw/vocab16.csv')
 print(ds)
@@ -126,18 +125,19 @@ list.files('data_raw', full.names = TRUE)
 ```{r import_multiple, include = FALSE}
 # read_csv can read a list of files!
 
-# Make a variable containing the list of data files
+# Get list of files
 full_file_names <- list.files('data_raw', full.names = TRUE)
 
 # Pass the list to read_csv to read all of them into a single tibble
 ds_all <- read_csv(full_file_names)
 print(ds_all)
 ```
+
 ---
 
 # Why did we need full.names? 
 .pull-left[
-- `list.files('data_raw')` gives `vocab12.csv`, `vocab12.5.csv`...which aren't in the working directory
+- `list.files('data_raw')` gives `vocab12.csv`, `vocab12.5.csv`...which aren't in the current working directory
 
 - `list.files('data_raw', full.names = TRUE)` gives the relative path including the directory:
 
@@ -147,6 +147,26 @@ print(ds_all)
 .pull-right[
 ![an image](dir.png)
 ]
+
+---
+
+`r chunk_reveal("fs", break_type = "auto", float = "none", widths = c(5, 1))`
+
+```{r fs, include = FALSE}
+# Use the fs package to have more control over files
+# install.packages("fs") # If needed
+
+library(fs)
+files <- dir_ls("data_raw")
+files
+
+# Just the filename
+path_file(files)
+
+# Absolute paths
+path_abs(files)
+```
+
 ---
 
 # What's a tibble? 

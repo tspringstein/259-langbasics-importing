@@ -49,7 +49,7 @@ class: center, middle, inverse, title-slide
 .content-box-blue[
 &lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; Follow along from the [Github repo](https://github.com/2025-PSYC-259/259-langbasics-importing)
 ]
-
+.footnote[.small[.bold[Last updated: 2025-01-06]]]
 ---
 # read_csv versus read.csv 
 
@@ -120,8 +120,7 @@ count: false
 ds &lt;- read.csv('data_raw/vocab16.csv')
 print(ds)
 
-# Let's load the readr package to use
-# read_csv
+# Let's load the readr package to use read_csv
 *library(readr)  #for read_csv
 ```
 ]
@@ -150,8 +149,7 @@ count: false
 ds &lt;- read.csv('data_raw/vocab16.csv')
 print(ds)
 
-# Let's load the readr package to use
-# read_csv
+# Let's load the readr package to use read_csv
 library(readr)  #for read_csv
 *ds &lt;- read_csv('data_raw/vocab16.csv')
 ```
@@ -181,8 +179,7 @@ count: false
 ds &lt;- read.csv('data_raw/vocab16.csv')
 print(ds)
 
-# Let's load the readr package to use
-# read_csv
+# Let's load the readr package to use read_csv
 library(readr)  #for read_csv
 ds &lt;- read_csv('data_raw/vocab16.csv')
 *print(ds)
@@ -604,7 +601,7 @@ count: false
 ``` r
 # read_csv can read a list of files!
 
-# Make a variable containing the list of data files
+# Get list of files
 *full_file_names &lt;- list.files('data_raw', full.names = TRUE)
 ```
 ]
@@ -622,7 +619,7 @@ count: false
 ``` r
 # read_csv can read a list of files!
 
-# Make a variable containing the list of data files
+# Get list of files
 full_file_names &lt;- list.files('data_raw', full.names = TRUE)
 
 # Pass the list to read_csv to read all of them into a single tibble
@@ -643,7 +640,7 @@ count: false
 ``` r
 # read_csv can read a list of files!
 
-# Make a variable containing the list of data files
+# Get list of files
 full_file_names &lt;- list.files('data_raw', full.names = TRUE)
 
 # Pass the list to read_csv to read all of them into a single tibble
@@ -702,11 +699,12 @@ ds_all &lt;- read_csv(full_file_names)
 
 
 
+
 ---
 
 # Why did we need full.names? 
 .pull-left[
-- `list.files('data_raw')` gives `vocab12.csv`, `vocab12.5.csv`...which aren't in the working directory
+- `list.files('data_raw')` gives `vocab12.csv`, `vocab12.5.csv`...which aren't in the current working directory
 
 - `list.files('data_raw', full.names = TRUE)` gives the relative path including the directory:
 
@@ -716,6 +714,236 @@ ds_all &lt;- read_csv(full_file_names)
 .pull-right[
 ![an image](dir.png)
 ]
+
+---
+
+count: false
+ 
+
+.panel1-fs-auto[
+
+``` r
+# Use the fs package to have more control over files
+*# install.packages("fs") # If needed  # install.packages("fs") # If needed
+```
+]
+ 
+.panel2-fs-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-fs-auto[
+
+``` r
+# Use the fs package to have more control over files
+# install.packages("fs") # If needed  # install.packages("fs") # If needed
+
+*library(fs)
+```
+]
+ 
+.panel2-fs-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-fs-auto[
+
+``` r
+# Use the fs package to have more control over files
+# install.packages("fs") # If needed  # install.packages("fs") # If needed
+
+library(fs)
+*files &lt;- dir_ls("data_raw")
+```
+]
+ 
+.panel2-fs-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-fs-auto[
+
+``` r
+# Use the fs package to have more control over files
+# install.packages("fs") # If needed  # install.packages("fs") # If needed
+
+library(fs)
+files &lt;- dir_ls("data_raw")
+*files
+```
+]
+ 
+.panel2-fs-auto[
+
+```
+data_raw/vocab12.5.csv data_raw/vocab12.csv   data_raw/vocab13.5.csv 
+data_raw/vocab14.5.csv data_raw/vocab14.csv   data_raw/vocab15.5.csv 
+data_raw/vocab15.csv   data_raw/vocab16.5.csv data_raw/vocab16.csv   
+data_raw/vocab17.5.csv data_raw/vocab17.csv   data_raw/vocab18.5.csv 
+data_raw/vocab18.csv   data_raw/vocab19.5.csv data_raw/vocab19.csv   
+data_raw/vocab20.5.csv data_raw/vocab20.csv   data_raw/vocab21.5.csv 
+data_raw/vocab21.csv   data_raw/vocab22.5.csv data_raw/vocab22.csv   
+data_raw/vocab23.5.csv data_raw/vocab23.csv   data_raw/vocab24.csv   
+```
+]
+
+---
+count: false
+ 
+
+.panel1-fs-auto[
+
+``` r
+# Use the fs package to have more control over files
+# install.packages("fs") # If needed  # install.packages("fs") # If needed
+
+library(fs)
+files &lt;- dir_ls("data_raw")
+files
+
+# Just the filename
+*path_file(files)
+```
+]
+ 
+.panel2-fs-auto[
+
+```
+data_raw/vocab12.5.csv data_raw/vocab12.csv   data_raw/vocab13.5.csv 
+data_raw/vocab14.5.csv data_raw/vocab14.csv   data_raw/vocab15.5.csv 
+data_raw/vocab15.csv   data_raw/vocab16.5.csv data_raw/vocab16.csv   
+data_raw/vocab17.5.csv data_raw/vocab17.csv   data_raw/vocab18.5.csv 
+data_raw/vocab18.csv   data_raw/vocab19.5.csv data_raw/vocab19.csv   
+data_raw/vocab20.5.csv data_raw/vocab20.csv   data_raw/vocab21.5.csv 
+data_raw/vocab21.csv   data_raw/vocab22.5.csv data_raw/vocab22.csv   
+data_raw/vocab23.5.csv data_raw/vocab23.csv   data_raw/vocab24.csv   
+```
+
+```
+ [1] "vocab12.5.csv" "vocab12.csv"   "vocab13.5.csv" "vocab14.5.csv"
+ [5] "vocab14.csv"   "vocab15.5.csv" "vocab15.csv"   "vocab16.5.csv"
+ [9] "vocab16.csv"   "vocab17.5.csv" "vocab17.csv"   "vocab18.5.csv"
+[13] "vocab18.csv"   "vocab19.5.csv" "vocab19.csv"   "vocab20.5.csv"
+[17] "vocab20.csv"   "vocab21.5.csv" "vocab21.csv"   "vocab22.5.csv"
+[21] "vocab22.csv"   "vocab23.5.csv" "vocab23.csv"   "vocab24.csv"  
+```
+]
+
+---
+count: false
+ 
+
+.panel1-fs-auto[
+
+``` r
+# Use the fs package to have more control over files
+# install.packages("fs") # If needed  # install.packages("fs") # If needed
+
+library(fs)
+files &lt;- dir_ls("data_raw")
+files
+
+# Just the filename
+path_file(files)
+
+# Absolute paths
+*path_abs(files)
+```
+]
+ 
+.panel2-fs-auto[
+
+```
+data_raw/vocab12.5.csv data_raw/vocab12.csv   data_raw/vocab13.5.csv 
+data_raw/vocab14.5.csv data_raw/vocab14.csv   data_raw/vocab15.5.csv 
+data_raw/vocab15.csv   data_raw/vocab16.5.csv data_raw/vocab16.csv   
+data_raw/vocab17.5.csv data_raw/vocab17.csv   data_raw/vocab18.5.csv 
+data_raw/vocab18.csv   data_raw/vocab19.5.csv data_raw/vocab19.csv   
+data_raw/vocab20.5.csv data_raw/vocab20.csv   data_raw/vocab21.5.csv 
+data_raw/vocab21.csv   data_raw/vocab22.5.csv data_raw/vocab22.csv   
+data_raw/vocab23.5.csv data_raw/vocab23.csv   data_raw/vocab24.csv   
+```
+
+```
+ [1] "vocab12.5.csv" "vocab12.csv"   "vocab13.5.csv" "vocab14.5.csv"
+ [5] "vocab14.csv"   "vocab15.5.csv" "vocab15.csv"   "vocab16.5.csv"
+ [9] "vocab16.csv"   "vocab17.5.csv" "vocab17.csv"   "vocab18.5.csv"
+[13] "vocab18.csv"   "vocab19.5.csv" "vocab19.csv"   "vocab20.5.csv"
+[17] "vocab20.csv"   "vocab21.5.csv" "vocab21.csv"   "vocab22.5.csv"
+[21] "vocab22.csv"   "vocab23.5.csv" "vocab23.csv"   "vocab24.csv"  
+```
+
+```
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab12.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab12.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab13.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab14.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab14.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab15.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab15.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab16.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab16.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab17.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab17.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab18.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab18.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab19.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab19.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab20.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab20.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab21.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab21.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab22.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab22.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab23.5.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab23.csv
+/Users/johnfranchak/Documents/GitHub-259-2025/259-langbasics-importing/docs/data_raw/vocab24.csv
+```
+]
+
+&lt;style&gt;
+.panel1-fs-auto {
+  color: black;
+  width: 81.6666666666667%;
+  hight: 32%;
+  float: none;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-fs-auto {
+  color: black;
+  width: 16.3333333333333%;
+  hight: 32%;
+  float: none;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-fs-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: none;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
 ---
 
 # What's a tibble? 
