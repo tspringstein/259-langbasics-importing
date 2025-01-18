@@ -150,7 +150,7 @@ print(ds_all)
 
 ---
 
-`r chunk_reveal("fs", break_type = "auto", float = "none", widths = c(5, 1))`
+`r chunk_reveal("fs", break_type = "rotate", float = "none", widths = c(5, 1))`
 
 ```{r fs, include = FALSE}
 # Use the fs package to have more control over files
@@ -158,39 +158,18 @@ print(ds_all)
 
 library(fs)
 files <- dir_ls("data_raw")
-files
-
-# Just the filename
-path_file(files)
-
-# Absolute paths
-path_abs(files)
+print(files) #ROTATE
+print(path_file(files)) #ROTATE
+print(path_ext_remove(path_file(files))) #ROTATE
+print(path_abs(files)) #ROTATE
 ```
-
----
-
-# What's a tibble? 
-
-- Tibbles are the tidyverse equivalent of base R data frames. 
-
-- A tibble/data frame is a rectangular data spreadsheet, with columns of variables and rows of observations
-
-- Tibbles/data frames will always appear in the "Data" section of the RStudio environment
-
-- If you click on the blue "play" button on a tibble in your RStudio environment, you can view a tibble
-
-- Unlike in Excel, you cannot edit the values. This is a feature, not a bug!
-
-- `ds$variable` lets you access one variable of a data set
 
 ---
 
 `r chunk_reveal("tibble", break_type = "auto", widths = c(1.5, 1))`
 
 ```{r tibble, include = FALSE}
-# Find the minimum and maximum ages
-min(ds_all$age)
-max(ds_all$age)
+# Let's add some things and write a combined output
 
 # Create a new column in a dataset
 ds_all$ppt_name <- "Jonah"
@@ -269,7 +248,7 @@ background-size: contain
 - Push your answers to a public Github repo, and turn in the homework by entering the link to the repo on Canvas
 
 .content-box-blue[
-`r icons::fontawesome("github")` Homework [Github repo](https://github.com/psych-259-data-science-2022/259-langbasics-importing-hw)
+`r icons::fontawesome("github")` Homework [Github repo](https://github.com/2025-PSYC-259/259-langbasics-importing-hw)
 ]
 
 <!-- adjust font size in this css code chunk, currently 80 -->
